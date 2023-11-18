@@ -5,7 +5,9 @@ project(2 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(2 main.cpp)
+add_executable(2 main.cpp
+    rockpaperscissorgenerator.h rockpaperscissorgenerator.cpp
+    calculateFunctions.h)
 
 include(GNUInstallDirs)
 install(TARGETS 2
