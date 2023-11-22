@@ -53,6 +53,35 @@ int findSame(string s1, string s2)
     }
     return total;
 }
+int findSame(string s1, string s2, string s3)
+{
+    int i1 = 0;
+    int i2 = 0;
+    int i3 = 0;
+    int total = 0;
+
+    for(auto it1 = s1.begin(); it1 != s1.end();)
+    {
+        for(auto it2 = s2.begin(); it2 != s2.end();)
+        {
+            if(*it1 == *it2)
+            {
+                for(auto it3 = s3.begin(); it3 != s3.end();){
+                    if(*it2==*it3)
+                    {
+                        total += getScore(*it3);
+                        break;
+                    }
+                    it3+=1;
+                }
+                break;
+            }
+            it2 +=1;
+        }
+        it1 +=1;
+    }
+    return total;
+}
 int main()
 {
     string inputFile = "C:/Users/boris/OneDrive/Documents/Projects/adventOFCode/3/rucksackItemsInput.txt";
@@ -60,7 +89,10 @@ int main()
     string line{};
     string item1{};
     string item2{};
+    string badges[]{"","",""};
     int score{0};
+    int score2{0};
+    int count{0};
     while (itemGenerator.is_open())
     {
         getline(itemGenerator, line, '\n');
@@ -71,12 +103,23 @@ int main()
         item2 = line.substr(middle);
         sort(item1.begin(), item1.end());
         sort(item2.begin(), item2.end());
+        sort(line.begin(), line.end());
         removeDuplicate(item1);
         removeDuplicate(item2);
+        removeDuplicate(line);
         score += findSame(item1, item2);
 
+        if(count == 2)
+        {
+            badges[count] = line;
+            score2 += findSame(badges[0],badges[1],badges[2]);
+
+        }
+        badges[count] = line;
         cout << "AFTER : first: " << item1 << ", second: "<<  item2 << ", score: " << score << endl;
         line.clear();
+        count = (count + 1) % 3;
     }
+    cout << score2;
     return 0;
 }
