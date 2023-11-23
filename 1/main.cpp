@@ -4,13 +4,13 @@
 #include "calorielist.h"
 
 using namespace std;
-std::string c_nameOfFile = "C:/Users/boris/OneDrive/Documents/Projects/adventOFCode/1/task1/inputFile.txt";
+std::string c_nameOfFile = "C:/Users/boris/OneDrive/Documents/Projects/adventOFCode/1/inputFile.txt";
 
 int main()
 {
 
     CalorieGenerator Elves(c_nameOfFile);
-    calorieList list;
+    CalorieList list;
 
     while(Elves.getElfKaloriList().is_open()){
         int caloriesCarriedByElf = Elves.getCalorieLineFromFile();

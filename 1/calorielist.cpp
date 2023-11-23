@@ -1,11 +1,11 @@
 #include "calorielist.h"
 
-calorieList::calorieList() : m_mostCalories{}, m_topThreeList{0,0,0}, m_caloriesCarriedByElf{}
+CalorieList::CalorieList() : m_mostCalories{}, m_topThreeList{0,0,0}, m_caloriesCarriedByElf{}
 {
 
 }
 
-void calorieList::setTopThreeList(int a_caloriesCarriedByElf)
+void CalorieList::setTopThreeList(int a_caloriesCarriedByElf)
 {
     if(m_topThreeList[2] < a_caloriesCarriedByElf)
     {
@@ -30,17 +30,17 @@ void calorieList::setTopThreeList(int a_caloriesCarriedByElf)
 
 }
 
-int calorieList::getMostCalories() const
+int CalorieList::getMostCalories() const
 {
     return m_mostCalories;
 }
 
-void calorieList::setMostCalories(int const newMostCalories)
+void CalorieList::setMostCalories(int const newMostCalories)
 {
     m_mostCalories = newMostCalories;
 }
 
-int calorieList::getSumOfTopThreeList()
+int CalorieList::getSumOfTopThreeList()
 {
     int sumOfCal = 0;
     for(int i = 0; i < 3; ++i)

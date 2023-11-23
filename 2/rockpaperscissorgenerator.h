@@ -4,10 +4,10 @@
 
 using namespace std;
 
-class rockPaperScissorGenerator
+class RockPaperScissorGenerator
  {
 public:
-    rockPaperScissorGenerator(string &txtFilename);
+    RockPaperScissorGenerator(string &txtFilename);
 
     ifstream& getRockPaperScissorFile();
     string getRounds();

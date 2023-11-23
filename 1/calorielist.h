@@ -1,9 +1,9 @@
 #pragma once
 
-class calorieList
+class CalorieList
 {
 public:
-    calorieList();
+    CalorieList();
     void setTopThreeList(int a_caloriesCarriedByElf);
 
     int getMostCalories() const;

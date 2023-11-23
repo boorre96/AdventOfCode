@@ -1,17 +1,17 @@
  #include "rockpaperscissorgenerator.h"
 
-rockPaperScissorGenerator::rockPaperScissorGenerator(string& a_txtFilename) :
+RockPaperScissorGenerator::RockPaperScissorGenerator(string& a_txtFilename) :
     m_rockPaperScissorGen(a_txtFilename)
 {
 
 }
 
-ifstream &rockPaperScissorGenerator::getRockPaperScissorFile()
+ifstream &RockPaperScissorGenerator::getRockPaperScissorFile()
 {
     return m_rockPaperScissorGen;
 }
 
-string rockPaperScissorGenerator::getRounds()
+string RockPaperScissorGenerator::getRounds()
 {
 
     while(true)

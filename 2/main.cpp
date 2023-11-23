@@ -10,7 +10,7 @@ int main()
 {
     int scorePartOne = 0;
     int scorePartTwo = 0;
-    rockPaperScissorGenerator rockPaperScissor(c_nameOfFile);
+    RockPaperScissorGenerator rockPaperScissor(c_nameOfFile);
     while(rockPaperScissor.getRockPaperScissorFile().is_open())
     {
         string chosenHandsigns = rockPaperScissor.getRounds();
