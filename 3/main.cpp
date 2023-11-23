@@ -98,9 +98,8 @@ int main()
         getline(itemGenerator, line, '\n');
         if(line.empty())
             break;
-        int middle = size(line)/2;
-        item1 = line.substr(0,middle);
-        item2 = line.substr(middle);
+        item1 = line.substr(0, line.size()/2);
+        item2 = line.substr(line.size()/2, line.size());
         sort(item1.begin(), item1.end());
         sort(item2.begin(), item2.end());
         sort(line.begin(), line.end());
