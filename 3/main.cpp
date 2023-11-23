@@ -116,10 +116,11 @@ int main()
 
         }
         badges[count] = line;
-        cout << "AFTER : first: " << item1 << ", second: "<<  item2 << ", score: " << score << endl;
         line.clear();
         count = (count + 1) % 3;
     }
-    cout << score2;
+    itemGenerator.close();
+    cout << "Score 1: "<< score << endl;
+    cout << "Score 2: "<< score2 << endl;
     return 0;
 }
