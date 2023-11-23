@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <map>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -33,63 +34,45 @@ int getScore(char it2){
 }
 int findSame(string s1, string s2)
 {
-    int i1 = 0;
-    int i2 = 0;
+    string items[2] = {s1,s2};
+    std::unordered_map<char, int> sameItem;
     int total = 0;
-    for(auto it1 = s1.begin(), it2 = s2.begin(); it1 != s1.end() && it2 != s2.end();)
-    {
-        if(*it1 == *it2)
-        {
-            total += getScore(*it1);
-            it2 +=1;
-            it1 +=1;
-        }
-        else if(*it1 > *it2)
-            it2 +=1;
-        else
-        {
-            it1 +=1;
-        }
-    }
+    for(int i = 0; i < 2; i++)
+        for(auto it = items[i].begin(); it != items[i].end(); it++)
+            sameItem[*it] +=1;
+
+    for(auto &threeBadges : sameItem)
+        total += (threeBadges.second == 2) ? getScore(threeBadges.first) : 0;
+
     return total;
+
 }
-int findSame(string s1, string s2, string s3)
+int findSameBadge(string badges[])
 {
-    int i1 = 0;
-    int i2 = 0;
-    int i3 = 0;
+    std::unordered_map<char, int> sameBadge;
     int total = 0;
 
-    for(auto it1 = s1.begin(); it1 != s1.end();)
-    {
-        for(auto it2 = s2.begin(); it2 != s2.end();)
-        {
-            if(*it1 == *it2)
-            {
-                for(auto it3 = s3.begin(); it3 != s3.end();){
-                    if(*it2==*it3)
-                    {
-                        total += getScore(*it3);
-                        break;
-                    }
-                    it3+=1;
-                }
-                break;
-            }
-            it2 +=1;
-        }
-        it1 +=1;
-    }
+    for(int i = 0; i < 3; i++)
+        for(auto it = badges[i].begin(); it != badges[i].end(); it++)
+            sameBadge[*it] +=1;
+
+    for(auto &threeBadges : sameBadge)
+        total += (threeBadges.second == 3) ? getScore(threeBadges.first) : 0;
+
     return total;
+
+
 }
+
 int main()
 {
+
     string inputFile = "C:/Users/boris/OneDrive/Documents/Projects/adventOFCode/3/rucksackItemsInput.txt";
     ifstream itemGenerator(inputFile);
     string line{};
     string item1{};
     string item2{};
-    string badges[]{"","",""};
+    string badges[3]{"","",""};
     int score{0};
     int score2{0};
     int count{0};
@@ -100,9 +83,6 @@ int main()
             break;
         item1 = line.substr(0, line.size()/2);
         item2 = line.substr(line.size()/2, line.size());
-        sort(item1.begin(), item1.end());
-        sort(item2.begin(), item2.end());
-        sort(line.begin(), line.end());
         removeDuplicate(item1);
         removeDuplicate(item2);
         removeDuplicate(line);
@@ -111,7 +91,7 @@ int main()
         if(count == 2)
         {
             badges[count] = line;
-            score2 += findSame(badges[0],badges[1],badges[2]);
+            score2 += findSameBadge(badges);
 
         }
         badges[count] = line;
