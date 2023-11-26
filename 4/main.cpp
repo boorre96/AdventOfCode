@@ -11,7 +11,7 @@ int main()
     ifstream assigmPairsInput(inputFile);
     string line{}, pair11{}, pair22{};
     pair <string, string> pair1, pair2;
-    int amountOftimes = 0;
+    int amountOfTimes = 0, amountOfTimesPart2 = 0;
     while(assigmPairsInput.is_open())
     {
         getline(assigmPairsInput, line);
@@ -29,10 +29,20 @@ int main()
         pair2.second = pair22.substr(pair22.find('-')+1, pair22.size());
 
         if(stoi(pair1.first) <= stoi(pair2.first) && stoi(pair1.second) >= stoi(pair2.second))
-            amountOftimes +=1;
+            amountOfTimes +=1;
         else if(stoi(pair2.first) <= stoi(pair1.first) && stoi(pair2.second) >= stoi(pair1.second))
-            amountOftimes +=1;
+            amountOfTimes +=1;
 
+        if(stoi(pair1.first) <= stoi(pair2.first))
+        {
+            if(stoi(pair1.second) >= stoi(pair2.first) || stoi(pair1.second) >= stoi(pair2.second))
+                amountOfTimesPart2 +=1;
+        }
+        else if(stoi(pair2.first) <= stoi(pair1.first))
+        {
+            if(stoi(pair2.second) >= stoi(pair1.first) || stoi(pair2.second) >= stoi(pair1.second))
+                amountOfTimesPart2 +=1;
+        }
 
         pair11.clear();
         pair22.clear();
@@ -40,6 +50,8 @@ int main()
 
     }
     assigmPairsInput.close();
-    cout << amountOftimes << endl;
+    cout << amountOfTimes << endl;
+    cout << amountOfTimesPart2 << endl;
+    cout << amountOfTimesPart2 - amountOfTimes << endl;
     return 0;
 }
