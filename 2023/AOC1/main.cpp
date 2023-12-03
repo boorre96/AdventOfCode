@@ -93,7 +93,7 @@ int main()
         twoDigitNumber[0] = firstDigitChar;
         twoDigitNumber[1] = lastDigitChar;
         sumOfValues += stoi(twoDigitNumber);
-        twoDigitNumber.clear();
+        //twoDigitNumber.clear();
     }
     calibrationDoc.close();
     cout << "sum = " << sumOfValues<< endl;
