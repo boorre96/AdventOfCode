@@ -59,7 +59,6 @@ int main()
                 indexDigitFirst = line.size() - sizeIt.size();
                 break;
             }
-            indexDigitFirst = 100;
         }
         // Checks string and stores the index when found
         for(auto& it: numbers)
@@ -80,7 +79,6 @@ int main()
                 indexDigitLast = it - line.begin();
                 break;
             }
-            indexDigitLast = -1;
         }
         for(auto& it: numbers)
         {
@@ -94,7 +92,6 @@ int main()
         }
         twoDigitNumber[0] = firstDigitChar;
         twoDigitNumber[1] = lastDigitChar;
-        cout << firstDigitChar << lastDigitChar << endl;
         sumOfValues += stoi(twoDigitNumber);
         twoDigitNumber.clear();
     }
