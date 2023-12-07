@@ -14,25 +14,26 @@ bool lost = false;
 
 void removeCubes(string a_cubeColor, string a_numberOfCubes)
 {
-    if(a_cubeColor.find("blue") != -1)
+    if(a_cubeColor.find("b") != -1)
     {
         if(blueCube < stoi(a_numberOfCubes))
             blueCube = stoi(a_numberOfCubes);
-        lost = (stoi(a_numberOfCubes) > 14) ? true : false;
+        if(stoi(a_numberOfCubes) > 14)
+            lost = true;
     }
-    else if(a_cubeColor.find("green") != -1)
+    else if(a_cubeColor.find("g") != -1)
     {
         if(greenCube < stoi(a_numberOfCubes))
             greenCube = stoi(a_numberOfCubes);
-        lost = (stoi(a_numberOfCubes) > 13) ? true : false;
-        //greenCube -= stoi(a_numberOfCubes);
+        if(stoi(a_numberOfCubes) > 13)
+            lost = true;
     }
-    else if(a_cubeColor.find("red") != -1)
+    else if(a_cubeColor.find("r") != -1)
     {
         if(redCube < stoi(a_numberOfCubes))
             redCube = stoi(a_numberOfCubes);
-        lost = (stoi(a_numberOfCubes) > 12) ? true : false;
-        //redCube -= stoi(a_numberOfCubes);
+        if(stoi(a_numberOfCubes) > 12)
+            lost = true;
     }
 }
 
@@ -52,47 +53,33 @@ int main()
         int delimiterOne = line.find(' ') +1;
         int delimiterTwo = line.find(':');
         string cubeColor{}, numberOfCubes{};
-
         gameID = line.substr(delimiterOne,delimiterTwo-delimiterOne);
         line.erase(0, delimiterTwo+2);
-        while (line.find(';') != -1)
+        while(line.find(32) != -1)
         {
-            string round = line.substr(0,line.find(';'));
-            while (round.find(',') != -1)
+            int index = line.find(32);
+            if(index > 1)
             {
-//                if(lost)
-//                    break;
-                numberOfCubes = round.substr(0,round.find(' '));
-                round.erase(0,round.find(' ')+1);
-                cubeColor = round.substr(0, round.find(','));
+                numberOfCubes += line[line.find(' ')-2];
+                numberOfCubes += line[line.find(' ')-1];
+                cubeColor += line[line.find(' ')+1];
                 removeCubes(cubeColor, numberOfCubes);
-                round.erase(0, round.find(',')+2);
+                numberOfCubes.clear();
+                cubeColor.clear();
+                line.erase(0,line.find(' ')+1);
+                line.erase(0,line.find(' ')+1);
             }
-//            if(lost)
-//                break;
-            numberOfCubes = round.substr(0,round.find(' '));
-            round.erase(0,round.find(' ')+1);
-            cubeColor = round.substr(round.find(' ')+1);
-            removeCubes(cubeColor, numberOfCubes);
-            line.erase(0, line.find(';')+2);
+            else
+            {
+                numberOfCubes += line[line.find(' ')-1];
+                cubeColor += line[line.find(' ')+1];
+                removeCubes(cubeColor, numberOfCubes);
+                numberOfCubes.clear();
+                cubeColor.clear();
+                line.erase(0,line.find(' ')+1);
+                line.erase(0,line.find(' ')+1);
+            }
         }
-        string round = line;
-        while (round.find(',') != -1)
-        {
-//            if(lost)
-//                break;
-            numberOfCubes = round.substr(0,round.find(' '));
-            round.erase(0,round.find(' ')+1);
-            cubeColor = round.substr(0, round.find(','));
-            removeCubes(cubeColor, numberOfCubes);
-            round.erase(0, round.find(',')+2);
-        }
-        //if(!lost)
-        //{
-            numberOfCubes = round.substr(0,round.find(' '));
-            cubeColor = round.substr(round.find(' ')+1);
-            removeCubes(cubeColor, numberOfCubes);
-        //}
         sumOfIDs += (lost == false) ? stoi(gameID) : 0;
         lastAmountOfCubes += (redCube * greenCube * blueCube);
         lost = false;
