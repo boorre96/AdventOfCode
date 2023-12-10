@@ -8,11 +8,13 @@
 
 using namespace std;
 
-int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
+double findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
                vector<vector<NumberStartStop>> const& a_partNumbers,
                int const a_row)
 {
-    int sum = 0;
+    double sum = 0;
+    double sum2= 0;
+    double number1{}, number2{};
     if(a_partSymbols[a_row].empty())
         return sum = 0;
     else
@@ -22,6 +24,9 @@ int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
             int l = (a_row == 0) ? 1 : -1;
             for(int i = 0; i < a_partSymbols[a_row].size(); i+=1)
             {
+                number1 = 0;
+                number2 = 0;
+                auto symbolType = a_partSymbols[a_row][i].getNumber();
                 auto symbolPos = a_partSymbols[a_row][i].startPos();
                 for (int j = 0; j < a_partNumbers.size(); ++j)
                 {
@@ -29,8 +34,16 @@ int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
                     if(symbolPos+1 == number.startPos() ||
                         symbolPos-1 == number.stopPos())
                     {
-                        cout << number.getNumber() << endl;
                         sum +=number.getNumber();
+                        if(symbolType == '*')
+                            if(number1 == 0)
+                                number1 = number.getNumber();
+                            else if(number2 == 0)
+                            {
+                                number2 = number.getNumber();
+                                sum2 += number1*number2;
+                            }
+
                     }
                 }
                 if(a_partNumbers[a_row+l].empty())
@@ -41,8 +54,16 @@ int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
                     if(symbolPos+1 >= number.startPos() &&
                         symbolPos-1 <= number.stopPos())
                     {
-                        cout << number.getNumber() << endl;
                         sum +=number.getNumber();
+                        if(symbolType == '*')
+                            if(number1 == 0)
+                                number1 = number.getNumber();
+                            else if(number2 == 0)
+                            {
+                                number2 = number.getNumber();
+                                sum2 += number1*number2;
+                            }
+
                     }
                 }
             }
@@ -51,7 +72,10 @@ int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
         {
             for(int i = 0; i < a_partSymbols[a_row].size(); i+=1)
             {
+                number1 = 0;
+                number2 = 0;
                 auto symbolPos = a_partSymbols[a_row][i].startPos();
+                auto symbolType = a_partSymbols[a_row][i].getNumber();
                 if(!a_partNumbers[a_row].empty())
                 {
                     for(int j = 0; j < a_partNumbers[a_row].size(); j+=1)
@@ -60,8 +84,16 @@ int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
                         if(symbolPos+1 == number.startPos() ||
                             symbolPos-1 == number.stopPos())
                         {
-                            cout << number.getNumber() << endl;
                             sum +=number.getNumber();
+                            if(symbolType == '*')
+                                if(number1 == 0)
+                                    number1 = number.getNumber();
+                                else if(number2 == 0)
+                                {
+                                    number2 = number.getNumber();
+                                    sum2 += number1*number2;
+                                }
+
                         }
                     }
                 }
@@ -73,8 +105,16 @@ int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
                         if(symbolPos+1 >= number.startPos() &&
                             symbolPos-1 <= number.stopPos())
                         {
-                            cout << number.getNumber() << endl;
                             sum +=number.getNumber();
+                            if(symbolType == '*')
+                                if(number1 == 0)
+                                    number1 = number.getNumber();
+                                else if(number2 == 0)
+                                {
+                                    number2 = number.getNumber();
+                                    sum2 += number1*number2;
+                                }
+
                         }
                     }
                 }
@@ -87,8 +127,16 @@ int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
                         if(symbolPos+1 >= number.startPos() &&
                             symbolPos-1 <= number.stopPos())
                         {
-                            cout << number.getNumber() << endl;
                             sum +=number.getNumber();
+                            if(symbolType == '*')
+                                if(number1 == 0)
+                                    number1 = number.getNumber();
+                                else if(number2 == 0)
+                                {
+                                    number2 = number.getNumber();
+                                    sum2 += number1*number2;
+                                }
+
                         }
                     }
                 }
@@ -96,25 +144,11 @@ int findSymbol(vector<vector<SymbolStartStop>> const& a_partSymbols,
         }
 
     }
-
-    //
-
-    return sum;
+    return sum2;
 }
 
 int main()
 {
-    /*
-467..114..
-...*......
-..35..633.
-......#...
-617*......
-.....+.58.
-..592.....
-......755.
-...$.*....
-.664.598..*/
     vector<vector<NumberStartStop>> partNumbers;
     vector<vector<SymbolStartStop>> partSymbols;
     //string const filename = "C:/Users/boris/OneDrive/Documents/Projects/adventOFCode/2023/AOC3/test.txt";
@@ -149,7 +183,7 @@ int main()
             }
             else if(!isdigit(line[i]) && line[i] != '.')
             {
-                SymbolStartStop numberFromList(-1, i, i);
+                SymbolStartStop numberFromList(line[i], i, i);
                 rowS.push_back(numberFromList);
                 number.clear();
             }
@@ -160,9 +194,9 @@ int main()
     partNumberGenerator.close();
     for(auto rows = 0; rows < partNumbers.size(); rows+=1)
     {
-        int sum =findSymbol(partSymbols, partNumbers, rows);
+        double sum =findSymbol(partSymbols, partNumbers, rows);
         sum1 += sum;
     }
-    cout << sum1 << endl;
+    cout << sum1 << " : "<< sum2 << endl;
     return 0;
-}//529870 to high
+} // to low
