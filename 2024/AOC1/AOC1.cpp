@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <map>
 
 
 
@@ -12,8 +13,11 @@ int main()
     std::string linesFromTextFile{};
     
     // Create two lists
-    std::vector<int> numberLeftSide{};
-    std::vector<int> numberRightSide{};
+    std::vector<unsigned int> numberLeftSide{};
+    std::vector<unsigned int> numberRightSide{};
+
+    // Create one hashmap
+    std::map<unsigned int, unsigned int> mapInt{};
 
     unsigned int totalLength = 0;
     unsigned int similarityScore = 0;
@@ -21,11 +25,11 @@ int main()
     while(std::getline(textFromFile, linesFromTextFile))
     {
 
-        std::string testL = linesFromTextFile.substr(0, linesFromTextFile.find(" "));
-        std::string testR = linesFromTextFile.substr(linesFromTextFile.find_last_of(" ")+1, linesFromTextFile.capacity());
+        std::string numberOnLeft = linesFromTextFile.substr(0, linesFromTextFile.find(" "));
+        std::string numbersOnRight = linesFromTextFile.substr(linesFromTextFile.find_last_of(" ")+1, linesFromTextFile.capacity());
 
-        numberLeftSide.push_back(stoi(testL));
-        numberRightSide.push_back(stoi(testR));
+        numberLeftSide.push_back(stoi(numberOnLeft));
+        numberRightSide.push_back(stoi(numbersOnRight));
     
     }
     std::sort(numberLeftSide.begin(), numberLeftSide.end());
@@ -33,25 +37,18 @@ int main()
 
     for(size_t i = 0; i < numberLeftSide.size(); i++)
     {
-        int length = (numberLeftSide[i] - numberRightSide[i]);
-        totalLength += (length < 0) ? length * -1 : length;   
+        const int length = (numberLeftSide[i] - numberRightSide[i]);
+        totalLength += (length < 0) ? length * -1 : length;
+
+        mapInt[numberRightSide[i]] += 1;
     }
     
-    for(size_t i = 0; i < numberLeftSide.size(); i++)
+    for(const unsigned int &number : numberLeftSide)
     {
-        unsigned int similarities = 0;
-        for(const auto &number : numberRightSide)
-        {
-            if (number == numberLeftSide[i])
-            {
-                similarities +=1;
-            }
-        }
-        similarityScore += numberLeftSide[i] * similarities;         
-    }
+        similarityScore += number * mapInt[number];
+    }    
 
     printf("totalLength: %d \n", totalLength);
     printf("similarityScore: %d", similarityScore);
-
     return 0;
 }
